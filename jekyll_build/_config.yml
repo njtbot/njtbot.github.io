@@ -2,3 +2,4 @@ name: Words
 markdown: redcarpet
 pygments: true
 destination: ../words
+permalink: date
