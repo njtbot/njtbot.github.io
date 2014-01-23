@@ -1,8 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
+@import url(http://fonts.googleapis.com/css?family=Exo+2:400,300,200italic|Monda);
 
 body {
   padding:50px;
-  font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font:14px/1.5 "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#777;
   font-weight:300;
 }
@@ -35,6 +35,11 @@ h3, h4, h5, h6 {
 a {
   color:#39c;
   font-weight:400;
+  
+}
+
+a.sidebar {
+  color:#000;
   text-decoration:none;
 }
 
@@ -46,8 +51,8 @@ a small {
 }
 
 .wrapper {
-  width:860px;
-  margin:0 auto;
+  width:900px;
+  margin:0;
 }
 
 blockquote {
@@ -160,7 +165,7 @@ header ul a strong {
 }
 
 section {
-  width:500px;
+  width:650px;
   float:right;
   padding-bottom:50px;
 }
