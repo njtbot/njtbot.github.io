@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="1"> <!-- Remove this for live site you muppet -->
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title><></title>
 
