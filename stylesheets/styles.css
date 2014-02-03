@@ -3,8 +3,26 @@
 body {
   padding:50px;
   font:14px/1.5 "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color:#777;
+  color:#706c70; /* #777 old */ 
   font-weight:300;
+}
+
+.greyText {
+  color: #706c70;
+}
+
+/* Override bootstrap header styles pls */
+h1 { 
+  font:28px/1.1 "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color:#706c70; /* #777 old */ 
+  font-weight:300;
+}
+
+h3 {
+  font: 18px/1.1 "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color:#494949; /* #777 old */ 
+  font-weight:300;
+  padding-bottom: 5px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -20,10 +38,6 @@ h1, h2, h3 {
   line-height:1.1;
 }
 
-h1 {
-  font-size:28px;
-}
-
 h2 {
   color:#393939;
 }
@@ -33,9 +47,33 @@ h3, h4, h5, h6 {
 }
 
 a {
-  color:#39c;
+  color:#ff5b00;
   font-weight:400;
-  
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration:none;
+  color: #ff5b00;
+  font-weight:400;
+}
+
+a:visited {
+  text-decoration:none;
+  color: #ff5b00;
+  font-weight:400;
+}
+
+a:hover {
+  text-decoration:none;
+  color: #ff5b00;
+  font-weight:400;
+}
+
+a:active {
+  text-decoration:none;
+  color: #ff5b00;
+  font-weight:400;
 }
 
 a.sidebar {
