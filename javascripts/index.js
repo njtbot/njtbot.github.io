@@ -16,11 +16,6 @@ var urlParams;
         $(function() {
           $("#pageContent").load("projects.html");
         });
-      } else if (urlParams["p"] == "words") {
-        // words
-        $(function() {
-          $("#pageContent").load("words.html");
-        });
       } else { 
         // home
         $(function() {
