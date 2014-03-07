@@ -16,6 +16,10 @@ if (urlParams["p"] == "projects" ) {
   $(function() {
     $("#pageContent").load("projects.html");
   });
+} else if (urlParams["p"] == "gpg") {
+  $(function() {
+    $("#pageContent").load("njt.asc");
+  });
 } else { 
   // home
   $(function() {
