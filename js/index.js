@@ -18,7 +18,7 @@ if (urlParams["p"] == "projects" ) {
   });
 } else if (urlParams["p"] == "gpg") {
   $(function() {
-    $("#pageContent").load("njt.asc");
+    $("#pageContent").load("njt.html");
   });
 } else { 
   // home
