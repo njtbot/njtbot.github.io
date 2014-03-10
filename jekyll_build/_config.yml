@@ -1,5 +1,5 @@
-name: Words
+name: Blog
 markdown: redcarpet
 pygments: true
-destination: ../words
+destination: ../blog
 permalink: date
