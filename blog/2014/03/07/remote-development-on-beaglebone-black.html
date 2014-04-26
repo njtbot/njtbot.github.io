@@ -36,52 +36,61 @@
 <p class="meta">07 Mar 2014 / Tags - </p>
 
 <div class="post">
-<p>I&#39;ve been wanting to experiment with the <a href="http://en.wikipedia.org/wiki/ARM_architecture#Floating-point_.28VFP.29">VFP</a> floating point unit and <a href="http://en.wikipedia.org/wiki/ARM_architecture#Advanced_SIMD_.28NEON.29">NEON</a> media engine in the latest ARM Cortex-A8 processors for a while now, as they&#39;re currently very cheap and accessible, but doing this over an SSH session on a command line was too scary (and painful) to comprehend.</p>
+<p>I&#8217;ve been wanting to experiment with the <a href="http://en.wikipedia.org/wiki/ARM_architecture#Floating-point_.28VFP.29">VFP</a> floating point unit and <a href="http://en.wikipedia.org/wiki/ARM_architecture#Advanced_SIMD_.28NEON.29">NEON</a> media engine in the latest ARM Cortex-A8 processors for a while now, as they&#8217;re currently very cheap and accessible, but doing this over an SSH session on a command line was too scary (and painful) to comprehend.</p>
 
 <p>Netbeans has excellent integration with Hudson builders (or Jenkins), remote SCM hooks (git, hg, svn) and also supports remote <code>C/C++ Build Hosts</code>. This seemed like the perfect way to execute remote code whilst retaining my sanity.</p>
 
-<p>There seems to be a number of fixes and pitfalls whilst setting up your environment for this type of development, so here&#39;s a quick write up of my somewhat painful experience in getting this to work. I&#39;m running Netbeans 7.4 beta on a Macbook Pro running OS X 10.8.4 and a revision B BeagleBone Black. </p>
+<p>There seems to be a number of fixes and pitfalls whilst setting up your environment for this type of development, so here&#8217;s a quick write up of my somewhat painful experience in getting this to work. I&#8217;m running Netbeans 7.4 beta on a Macbook Pro running OS X 10.8.4 and a revision B BeagleBone Black. </p>
 
-<h1>Setup</h1>
+<h1 id="setup">Setup</h1>
 
-<p>Under Netbeans&#39; &#39;Services&#39; tab:</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">&#39;C/C++ Build Hosts&#39; -&gt; Right Click -&gt; &#39;Add New Host...&#39;
-</code></pre></div>
+<p>Under Netbeans&#8217; &#8216;Services&#8217; tab:</p>
+
+<pre><code>'C/C++ Build Hosts' -&gt; Right Click -&gt; 'Add New Host...'
+</code></pre>
+
 <p>Both the usb0 bridge and ethernet have static IP addresses, as shown below -</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">Hostname - 
-    usb0 bridge - 192.168.7.2 
-    ethernet    - 192.168.0.20           
+
+<pre><code>Hostname - 
+	usb0 bridge - 192.168.7.2 
+	ethernet    - 192.168.0.20           
 Login - root         
 Password - *blank*
-</code></pre></div>
-<p>Select the &quot;Remember Password&quot; option in the password window, otherwise Netbeans may refuse to connect. I&#39;m running all this as root on the BBB as I&#39;m lazy, but it&#39;d be best to setup a new user out of the box e.g.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">root@beaglebone:~# adduser NEWUSER     
-</code></pre></div>
+</code></pre>
+
+<p>Select the &#8220;Remember Password&#8221; option in the password window, otherwise Netbeans may refuse to connect. I&#8217;m running all this as root on the BBB as I&#8217;m lazy, but it&#8217;d be best to setup a new user out of the box e.g.</p>
+
+<pre><code>root@beaglebone:~# adduser NEWUSER     
+</code></pre>
+
 <p>Netbeans will then connect to the board over SSH and scan for any existing toolchains. In my case, using a brand new BBB running Angstrom, the processor-specific GNU toolchain was found and populated into the <code>C/C++ Build Hosts</code> tree in Netbeans.</p>
 
 <p>Upon running a build, Netbeans will connect to the remote host and try to map the build paths to the remote filesystem. In my case, I first had to map <code>/</code> on the BBB to <code>/Volumes/root/</code> under my Macbook by exposing the root filesystem of the beagle using Samba and a hacky <code>/etc/smb.conf</code> to allow public guests.</p>
-<div class="highlight"><pre><code class="text language-text" data-lang="text">opkg update &amp;&amp; opkg install samba
+
+<pre><code>opkg update &amp;&amp; opkg install samba
 nano /etc/smb.conf
-</code></pre></div>
-<p>Mapping root allows you to access all files on the Beagleboard from Netbeans, rather than just the home directory for each user. From a security standpoint this is a terrible idea, but I treat my BBB as a dev host which I&#39;m sure I&#39;ll reflash multiple times in the very near future. </p>
+</code></pre>
 
-<h1>Fix 1</h1>
+<p>Mapping root allows you to access all files on the Beagleboard from Netbeans, rather than just the home directory for each user. From a security standpoint this is a terrible idea, but I treat my BBB as a dev host which I&#8217;m sure I&#8217;ll reflash multiple times in the very near future. </p>
 
-<p>Netbeans seems to assume any Linux distro is running on an <code>x86</code> core. They aren&#39;t, they&#39;re <code>armv7</code>, so should be running the <code>armv7</code> toolchain for gcc. This is prefixed as arm-gnu-linux-noeabi-, or possibly just gcc depending on the packages installed.</p>
+<h1 id="fix-1">Fix 1</h1>
+
+<p>Netbeans seems to assume any Linux distro is running on an <code>x86</code> core. They aren&#8217;t, they&#8217;re <code>armv7</code>, so should be running the <code>armv7</code> toolchain for gcc. This is prefixed as arm-gnu-linux-noeabi-, or possibly just gcc depending on the packages installed.</p>
 
 <p>Because of this, Netbeans decided to call the remote build OS <code>GNU-Linux-x86</code> in the build path and project options, but <code>GNU-x86_64-Linux</code> in the Makefile. This led to a lot of problems and troubleshooting. If you take note of the path error Netbeans throws out, you should be able to find/replace the correct strings in the Makefile. Also, my local build system was prefixed as <code>Mac OS X</code> - at least it got that part correct.</p>
 
-<h1>Possibly working...</h1>
+<h1 id="possibly-working">Possibly working&#8230;</h1>
 
 <p>If all went well, you should now be able to hit <code>Build</code> then <code>Run</code> and Netbeans will happily build your project on your network-accessible Beagleboard and show you the standard output from the BBB  in the <code>Output</code> pane of Netbeans.</p>
 
-<h1>Fix 2</h1>
+<h1 id="fix-2">Fix 2</h1>
 
-<p>If any files are listed as missing, or claims of makefile targets not existing, then you may need to individually right click on each file under your project tree and select <code>Upload to root@192.168.0.20</code>. I haven&#39;t found a quick way around this yet on Mac. I believe Netbeans on Linux handles this correctly and uses <code>scp</code> to auto-update the remote host files. If you can find a way around it, shoot me an email.</p>
+<p>If any files are listed as missing, or claims of makefile targets not existing, then you may need to individually right click on each file under your project tree and select <code>Upload to root@192.168.0.20</code>. I haven&#8217;t found a quick way around this yet on Mac. I believe Netbeans on Linux handles this correctly and uses <code>scp</code> to auto-update the remote host files. If you can find a way around it, shoot me an email.</p>
 
-<p>Hopefully now, you&#39;ll have a working remote development system and you should be able to happily debug the remote target with no issues. </p>
+<p>Hopefully now, you&#8217;ll have a working remote development system and you should be able to happily debug the remote target with no issues. </p>
 
 <p>NEON experimentation coming soon.</p>
+
 
 </div>
 
