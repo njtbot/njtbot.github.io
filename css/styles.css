@@ -1,7 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Exo+2:400,300,200italic|Monda);
 
 body {
-  padding:50px;
   font:14px/1.5 "Exo 2", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#706c70; /* #777 old */ 
   font-weight:300;
@@ -89,6 +88,7 @@ a small {
 }
 
 .wrapper {
+  padding-top: 50px;
   width:900px;
   margin:0;
 }
@@ -139,9 +139,13 @@ img {
 }
 
 header {
-  width:270px;
+  width:220px;
+  padding-left: 50px;
+  padding-top: 50px;
+  height:100%;
   float:left;
   position:fixed;
+  z-index:-1;
 }
 
 header ul {
@@ -220,8 +224,9 @@ hr {
 }
 
 footer {
-  width:270px;
+  width:220px;
   float:left;
+  padding-left: 50px;
   position:fixed;
   bottom:50px;
 }

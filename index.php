@@ -19,9 +19,6 @@
     <link rel="stylesheet" href="css/pygment_trac.css">
     <link rel="stylesheet" href="css/styles.css"> 
 
-    <!-- -->
-    <script src="./js/index.js"></script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,20 +26,26 @@
   </head>
 
   <body>
-    <div class="wrapper">
-      
+
+    <?php $page = $_GET['p']; ?>
+
       <header>
-        <h1><a href="./" class="sidebar">nick<br>trimble</a></h1>
+        <h1><a href="./" class="sidebar"><strike>njt</strike></a></h1>
         <p><br>
           <a href="?p=projects" class="sidebar">Projects</a><br>
           <br><a href="./blog" class="sidebar">Blog</a><br>
         </p>
       </header>
 
-      <section>
-      <div id="pageContent">
+    <div class="wrapper">
 
-      </div>  
+      <section>
+      
+      <?php
+        if(strcmp($page,"projects")==0) { include "projects.html"; }
+        elseif(strcmp($page,"gpg")==0) { include "njt.html"; }
+        else{ include "home.html"; }
+      ?>
       </section>
 
       <footer>
@@ -69,8 +72,7 @@
           </div>
         </div>
 
-        <!--
-        <p class="small">&copy; 2014</p>-->
+        <!--<p class="small">&copy; 2014</p>-->
       </footer>
     </div>
     <script src="js/scale.fix.js"></script> 
